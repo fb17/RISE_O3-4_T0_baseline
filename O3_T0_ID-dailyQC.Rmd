@@ -1,0 +1,40 @@
+---
+title: "RISE Baseline Survey (Obj 3/4) - Daily QC"
+author: "Makassar Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/3.Baseline/2. ID/2. Data/2. code/RISE_O3-4_T0_baseline") 
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source("O3_T0_ID-dailyqc.R")
+```
+
+
+
+#Daily QC/Verification for Obj 3 and 4 Baseline Survey (Makassar) - `r day.qc`
+The community(ies) visited today were: `r settlement.list`
+
+#House surveys
+There were a total of `r nrow (subhouse)` house surveys initiated today, and `r nrow (house.complete)` were completed.
+
+Then maybe list house numbers and settlements?
+
+#Household surveys
+There were a total of `r nrow (subhhd)` household surveys initiated today, and `r nrow (hhd.complete)` were completed.
+
+#Household Consent surveys
+There were a total of `r nrow (hhd.consent.yes)` household consent forms signed today.
+
+
+#Verification Errors
+Surveys that were not verified by respondents cannot be uploaded to the Monash server.
+
+There were `r nrow (house.no.verify)` house surveys that did not verify their responses.
+There were `r nrow (hhd.no.verify)` household surveys that did not verify their responses.
+There were `r nrow (consent.no.verify)` consent surveys that did not verify their responses.
