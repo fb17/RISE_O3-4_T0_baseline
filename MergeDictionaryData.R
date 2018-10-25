@@ -63,7 +63,9 @@ surveyDF$type[the_type] <- "factor (select multiple)"
 
 HouseColumns <- colnames(house, do.NULL = TRUE, prefix = "col")
 
-
+#######################################
+# Merge data set with data dictionary #
+#######################################
 for(i in 1:nrow(surveyDF)) {
   if(grepl("factor", surveyDF$type[i])) {
     factor_label <- surveyDF$factorlabel[i]
