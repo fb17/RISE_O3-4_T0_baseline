@@ -7,40 +7,47 @@ library (lubridate)
 library (stringr)
 
 rm(list = ls())
-setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/3.Baseline/2. ID/2. Data/1. raw data/testing")
+setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/3.Baseline/2. ID/2. Data/1. raw data/20181102_practice_ID")
+
 
 # DEFINE TODAY FOR DAILY QC - this is the date of data collection
-date <- "2018-10-12"
+date <- "2018-11-02"
 day.qc <- ymd (date)
 rm(date)
 
 # HOUSE SURVEY
-house <- read_csv (file="RISE_baseline_house_ID_v16.csv")
-house.water <- read_csv (file="RISE_baseline_house_ID_v16-house_survey-water_use-water_repeat.csv")
+# house <- read_csv (file="RISE_baseline_house_ID_v17.csv")
+house <- read.csv(file="RISE_baseline_house_ID_v17.csv", header=TRUE, sep="\t")
+house.water <- read.csv(file="RISE_baseline_house_ID_v17-house_survey-water_use-water_repeat.csv", header=TRUE, sep="\t")
 
 # HOUSEHOLD SURVEY
-hhd <- read_csv (file = "RISE_baseline_hhd_ID_v14.csv")
-hhd.child <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-child_loop.csv")
-hhd.activity <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-activity.csv")
-hhd.daycare <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-daycare.csv")
-hhd.ethnicity <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-ethnicity_screen-ethnicity_repeat.csv")
-hhd.marital <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-marital_status1.csv")
-hhd.read <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-read.csv")
-hhd.religion <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-religion_screen-religion_repeat.csv")
-hhd.school <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-demographics-school.csv")
-hhd.person <- read_csv (file = "RISE_baseline_hhd_ID_v14-hhd_survey-person_details1.csv")
+hhd <- read.csv (file = "RISE_baseline_hhd_ID_v15.csv", header=TRUE, sep="\t")
+hhd.child <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-child_loop.csv", header=TRUE, sep="\t")
+hhd.activity <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-activity.csv", header=TRUE, sep="\t")
+hhd.daycare <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-daycare.csv", header=TRUE, sep="\t")
+hhd.ethnicity <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-ethnicity_screen-ethnicity_repeat.csv", header=TRUE, sep="\t")
+hhd.marital <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-marital_status1.csv", header=TRUE, sep="\t")
+hhd.read <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-read.csv", header=TRUE, sep="\t")
+hhd.religion <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-religion_screen-religion_repeat.csv", header=TRUE, sep="\t")
+hhd.school <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-demographics-school.csv", header=TRUE, sep="\t")
+hhd.person <- read.csv (file = "RISE_baseline_hhd_ID_v15-hhd_survey-person_details1.csv", header=TRUE, sep="\t")
 
 # CONSENT SURVEY
-consent <- read_csv (file = "consent_ID.csv")
-consent.form3 <- read_csv (file = "consent_ID-consent_form3.csv")
-consent.childname <- read_csv (file = "consent_ID-consent3_childname.csv")
+consent <- read.csv (file = "RISE_consent_ID.csv", header=TRUE, sep="\t")
+consent.form3 <- read.csv (file = "RISE_consent_ID-consent_form3.csv", header=TRUE, sep="\t")
+consent.childname <- read.csv (file = "RISE_consent_ID-consent3_childname.csv", header=TRUE, sep="\t")
 
 #############################################
 
-# FIX ALL DATES *****************************
-house$today <- dmy (house$today)
-# hhd$today <- ymd (hhd$today)
-# consent$today <- mdy (consent$today)
+
+
+
+
+
+
+
+
+
 
 #############################################
 ##  Correct known errors in the data       ##
@@ -61,6 +68,11 @@ house$today <- dmy (house$today)
 # source("consentid-clean.R")
 # setwd("S:/R-MNHS-SPHPM-EPM-IDEpi/Current/RISE/4. Surveys/2.Consent and House ID/2. ID/2. Data")
 
+house$today <- ymd (house$today)  #you will need to change depending on how the data downloads
+#fiona to fix later
+hhd$today <- ymd (hhd$today) 
+consent$today <- ymd (consent$today)
+
 
 #############################################
 #############################################
@@ -68,13 +80,13 @@ house$today <- dmy (house$today)
 #############################################
 #############################################
 
-subconsent <- subset (consent, today == day.qc, 
-                      select = c (settlement_name, extract_house_no, signed_form1, consent1_1, consent1_2, consent1_3, verify1)) 
+subconsent <- subset (consent, today == day.qc,
+                      select = c (community_name, house_no))
 subhouse <- subset (house, today == day.qc, 
-                    select = c (settlement, extract_house_no, verify1, survey_status))
+                    select = c (extract_settlement, extract_house_no, verify1, survey_status))
 
 subhhd <- subset (hhd, today == day.qc, 
-                  select = c (settlement, extract_house_no, verify1, survey_status))
+                  select = c (extract_settlement, extract_house_no, verify1, survey_status))
 
 
 
@@ -88,10 +100,10 @@ subhhd <- subset (hhd, today == day.qc,
 #############################################
 ####### what settlements were visited ************
 settlement <-  subhouse %>% 
-  arrange (settlement) %>% 
-  group_by (settlement) %>%
+  arrange (extract_settlement) %>% 
+  group_by (extract_settlement) %>%
   summarize (count = n ())
-settlement.list <- pull (settlement, var = settlement)
+settlement.list <- pull (settlement, var = extract_settlement)
 
 
 #############################################
@@ -118,11 +130,11 @@ hhd.complete <- subhhd %>%
 
 #############################################
 # HOUSEHOLD CONSENT FORMS
-#number started
+# number started
 nrow(subconsent)
 
 #number completed
-hhd.consent.yes <- subconsent %>% 
+hhd.consent.yes <- subconsent %>%
   filter (signed_form1 == 1, consent1_1 == "yes", consent1_2 == "yes", consent1_3 == "yes", verify1 == 1)
 nrow(hhd.consent.yes) #2
 
@@ -134,7 +146,7 @@ house.no.verify <- subhouse %>%
   filter (verify1 == 0)
 hhd.no.verify <- subhhd %>% 
   filter (verify1 == 0)
-consent.no.verify <- subconsent %>% 
+consent.no.verify <- subconsent %>%
   filter (verify1 == 0)
 
 

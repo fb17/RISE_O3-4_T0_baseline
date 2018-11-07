@@ -23,7 +23,7 @@ The community(ies) visited today were: `r settlement.list`
 #House surveys
 There were a total of `r nrow (subhouse)` house surveys initiated today, and `r nrow (house.complete)` were completed.
 
-Then maybe list house numbers and settlements?
+Then maybe list house numbers and settlements? ************
 
 #Household surveys
 There were a total of `r nrow (subhhd)` household surveys initiated today, and `r nrow (hhd.complete)` were completed.
@@ -35,6 +35,7 @@ There were a total of `r nrow (hhd.consent.yes)` household consent forms signed 
 #Verification Errors
 Surveys that were not verified by respondents cannot be uploaded to the Monash server.
 
-There were `r nrow (house.no.verify)` house surveys that did not verify their responses.
-There were `r nrow (hhd.no.verify)` household surveys that did not verify their responses.
-There were `r nrow (consent.no.verify)` consent surveys that did not verify their responses.
+
+*There were `r nrow (house.no.verify)` house surveys that did not verify their responses.
+*There were `r nrow (hhd.no.verify)` household surveys that did not verify their responses.
+*There were `r nrow (consent.no.verify)` consent surveys that did not verify their responses.
