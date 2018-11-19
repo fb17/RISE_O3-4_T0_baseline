@@ -42,6 +42,9 @@ house$today <- dmy (house$today)
 # consent$today <- mdy (consent$today)
 
 
+
+
+
 fix_date <- function(x_date){
   x_date <- ifelse(!is.na(ymd_hms(x_date)), ymd_hms(x_date), dmy_hms(x_date))  # Check the format and return the correct integer-date
   x_date <- as.POSIXct(x_date, origin = "1970-01-01", tz = "UTC")  # Convert the integer-date to a consistent format
@@ -155,6 +158,39 @@ table(house$plants_yn)
 
 
 #############################################
+# checking things
+
+table(house$survey_status, useNA = "always")
+table(house$home_yn, house$survey_status, useNA = "always")
+
+# how to identify a completed house survey?
+table(house$children_yn)
+table(house$respondent_house, house$home_yn, useNA = "always")
+
+
+
+table(hhd$survey_status, useNA = "always")
+# how to identify a completed house survey?
+sum (hhd$no_people)
+table (hhd$no_people)
+sum (hhd$no_child_under5)
+
+# put house and household together
+house1 <- house %>% 
+  select (settlement_barcode, extract_house_no, survey_status, home_yn)
+hhd1 <- hhd %>% 
+  select (settlement_barcode, extract_house_no, hhd_name, survey_status)
+
+  
+  
+  
+rm(house1, )
+
+
+
+# 
+table (hhd$language)
+
 #############################################
 # DESCRIPTIVE / SUMMARY STATISTICS???
 lapply(house, function(x) {

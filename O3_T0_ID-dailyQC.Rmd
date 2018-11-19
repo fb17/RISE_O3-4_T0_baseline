@@ -2,7 +2,9 @@
 title: "RISE Baseline Survey (Obj 3/4) - Daily QC"
 author: "Makassar Team"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +25,6 @@ The community(ies) visited today were: `r settlement.list`
 #House surveys
 There were a total of `r nrow (subhouse)` house surveys initiated today, and `r nrow (house.complete)` were completed.
 
-Then maybe list house numbers and settlements? ************
 
 #Household surveys
 There were a total of `r nrow (subhhd)` household surveys initiated today, and `r nrow (hhd.complete)` were completed.
