@@ -1,0 +1,31 @@
+---
+title: "RISE Objective 3 Child Sampling - Daily QC - child sampling"
+author: "Fiji Team"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+setwd("Z:/R Script/R Script Obj 3/Child Sampling") 
+
+library (tidyverse)
+library (lubridate)
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE) #this stops warnings from displaying in html
+source("O3_T1_FJ-dailyqc_child_sampling.R")
+```
+
+
+# Daily QC for Obj 3 Child Sampling (Fiji) - `r day.qc`
+The community(ies) visited today were: `r settlement.list`
+
+# Child sampling surveys
+There were a total of `r nrow (subchild1)` child sampling survey(s) initiated today, `r nrow (no.edta)` edta blood samples collected, `r nrow (no.serum)` serum blood samples collected, `r nrow (no.bloodspot)` bloodspot samples collected, and `r nrow (no.feces)` feces collection kits handed out.
+
+# Feces collection surveys
+There were a total of `r nrow (subfeces1)` feces collection survey(s) initiated today, and `r nrow (feces.yes)` feces samples collected.
+
+
